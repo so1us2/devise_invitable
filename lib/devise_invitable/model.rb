@@ -40,12 +40,12 @@ module Devise
       end
 
       # Reset invitation token and send invitation again
-      def invite!
+      def invite!(opts = {})
         if new_record? || invited?
           self.skip_confirmation! if self.new_record? and self.respond_to? :skip_confirmation!
           generate_invitation_token
           save(:validate=>false)
-          send_invitation
+          send_invitation unless opts[:email] == false
         end
       end
 
